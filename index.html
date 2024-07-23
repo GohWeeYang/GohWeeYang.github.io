@@ -1,24 +1,488 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Github有免费的</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-    }
-    
-    h1 {
-      font-size: 3em;
-      color: #FF6347;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP8266 控制台</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100%;
+        }
+
+        .sidebar {
+            height: 96%;
+            width: 18%;
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            background-color: rgb(66, 66, 66);
+            border-radius: 10px;
+            margin: 1%;
+        }
+
+
+        .sidebar a {
+            margin: 3%;
+            padding: 5% 2% 5% 2%;
+            text-decoration: none;
+            font-size: 17px;
+            color: rgb(255, 255, 255);
+            display: block;
+            background-color: rgb(66, 66, 66);
+            border-radius: 5px;
+        }
+
+
+        .ESP_page {
+            margin-top: 5%;
+            margin-bottom: 6%;
+            padding: 6% 2% 11% 5%;
+            text-decoration: none;
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+            display: block;
+            background-color: rgb(66, 66, 66);
+            border-bottom: solid 1px rgb(142, 133, 133);
+            border-radius: 5px 5px 0px 0px;
+            cursor: default;
+        }
+
+
+        .sidebar a:hover {
+            background-color: rgb(100, 100, 100);
+        }
+
+        .sidebar a.sidebar_a_active {
+            background-color: rgb(216, 27, 96);
+        }
+
+        .main-content {
+            margin-left: 20%;
+            display: none;
+
+        }
+
+        .content_container {
+
+            display: flex;
+            justify-content: space-between;
+            margin: 1%;
+            margin-left: 0%;
+        }
+
+
+
+
+        /* main_2的 */
+        .wifi_container {
+            min-height: 100%;
+            /* 设置最小高度 */
+            width: 50%;
+            border: solid 1px black;
+            border-width: 1px;
+            padding-left: 1%;
+            padding-right: 1%;
+        }
+
+        .show_network {
+            margin-bottom: 2%;
+        }
+
+
+        .submit_form {
+            margin: auto;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            width: 96%;
+            padding: 2%;
+            padding-left: 2%;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .merged_image {
+            margin: auto;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            width: 96%;
+            padding: 2%;
+            padding-left: 2%;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #canvas {
+            display: block;
+            /* 将 canvas 作为块级元素 */
+            margin: auto;
+            /* 使 canvas 水平居中 */
+        }
+
+        .wifi_container label {
+            font-weight: bold;
+            display: block;
+        }
+
+
+        .styled-input {
+            margin-top: 1%;
+            margin-bottom: 3%;
+            width: 94%;
+            padding: 2%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .styled-input:focus {
+            border-color: #66afe9;
+            outline: none;
+        }
+
+        .styled-button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            width: 98%;
+            border: 1px solid black;
+        }
+
+        .styled-button:hover {
+            background-color: #0056b3;
+        }
+
+
+
+        .ssid_button {
+            background-color: white;
+            margin-top: 1%;
+            width: 49%;
+            padding: 2%;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .ssid_button:hover {
+            background-color: rgb(225, 225, 225)
+        }
+
+
+
+
+        /* main_4 */
+        .file_button {
+            background-color: white;
+            margin-bottom: 1%;
+            margin-right: auto;
+            width: 24%;
+            padding: 2%;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>个人免费github</h1>
-  <h2>尝试</h2>
+
+    <div class="sidebar">
+        <div class="ESP_page">
+            Tool For Work
+        </div>
+        <a href="javascript:void(0);" id="main_1_nav" onclick="page('main_1')">Merge Image</a>
+        <a href="javascript:void(0);" id="main_2_nav" onclick="page('main_2')">None</a>
+        <a href="javascript:void(0);" id="main_3_nav" onclick="page('main_3')">None</a>
+        <a href="javascript:void(0);" id="main_4_nav" onclick="page('main_4')">None</a>
+    </div>
+
+    <div class="main-content" id="main_1">
+        <div class="content_container">
+            <div class="wifi_container" style="border-radius: 10px 0px 0px 10px; border-width: 1px 0px 1px 1px; ">
+                <h2>Barcode</h2>
+                <hr>
+                <div class="show_network">
+                    <button type="text" onclick="line_control('start')" style="width: 99%;"
+                        class="ssid_button">Start</button>
+                    <button type="text" onclick="line_control('previous')" class="ssid_button">Previous</button>
+                    <button type="text" onclick="line_control('next')" class="ssid_button">Next</button>
+                    <textarea id="myTextarea" rows="35%"
+                        style="resize: none; width:100%; margin-top: 5%; box-sizing: border-box;"
+                        placeholder="Put the code line by line"></textarea>
+                </div>
+            </div>
+
+
+            <div class="wifi_container" style="border-radius: 0px 10px 10px 0px;">
+                <h2>Merge Image</h2>
+                <hr>
+                <div class="submit_form">
+                    <label for="image1">Image 1:</label>
+                    <input type="text" id="image1" class="styled-input"><br>
+                    <label for="image2">Image 2:</label>
+                    <input type="text" id="image2" class="styled-input"><br>
+                    <button onclick="merge_image()" class="styled-button">Merge</button>
+                </div>
+
+                <div class="merged_image">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-content" id="main_2">
+
+    </div>
+
+
+
+
+    <div class="main-content" id="main_3">
+        <div class="wifi_container" style="border-radius: 10px; margin: auto; margin-top: 10%;">
+            <h2>Sound Control</h2>
+            <hr>
+            <div class="submit_form">
+                <label for="hz">Hz:</label>
+                <input type="text" id="hz" class="styled-input"><br>
+                <label for="duration">Time Duration:</label>
+                <input type="text" id="duration" class="styled-input"><br>
+                <button onclick="sound()" class="styled-button">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content" id="main_4">
+        <div class="content_container">
+            <div style="width: 100%;">
+                <h1>File</h1>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+                    <button type="text" onclick="ssid_pass('恭喜發財@unifi')" class="file_button">index.html</button>
+                    <button type="text" onclick="ssid_pass('大吉大利-5Ghz@unifi')" class="file_button">hehe.txt</button>
+                    <button type="text" onclick="ssid_pass('恭喜發財@unifi')" class="file_button">File 2</button>
+                    <button type="text" onclick="ssid_pass('大吉大利-5Ghz@unifi')" class="file_button">File 1</button>
+
+                    <button type="text" onclick="ssid_pass('恭喜發財@unifi')" class="file_button">File 2</button>
+                    <button type="text" onclick="ssid_pass('大吉大利-5Ghz@unifi')" class="file_button">File 1</button>
+                    <button type="text" onclick="ssid_pass('恭喜發財@unifi')" class="file_button">File 2</button>
+                    <button type="text" onclick="ssid_pass('大吉大利-5Ghz@unifi')" class="file_button">File 1</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function merge_image() {
+            const image1 = document.getElementById('image1').value;
+            const image2 = document.getElementById('image2').value;
+
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+
+
+            if (!image1 && !image2) {
+                alert('Empty Image code');
+                return;
+            }
+
+
+
+            if (image2 == '' || image2 == 'undefined' || !image2) {
+                image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
+
+                // 创建1个图片对象
+                const img1 = new Image();
+
+                img1.onload = function () {
+                    // 设置画布的大小为两张图片宽度之和，高度取最大值
+                    canvas.width = img1.width;
+                    canvas.height = img1.height;
+
+                    // 清空画布
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // 绘制第一张图片
+                    ctx.drawImage(img1, 0, 0);
+                };
+
+                // 设置第1张图片的 src 属性，触发加载
+                img1.src = image1URL;
+                return;
+            }
+
+
+            image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
+            image2URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image2 + "&code=Code128&translate-esc=on&rotation=270&font=Arial%2C25%2Cregular";
+
+            // 创建两个图片对象
+            const img1 = new Image();
+            const img2 = new Image();
+
+            // 加载第一张图片
+            img1.onload = function () {
+                // 加载第二张图片
+                img2.onload = function () {
+                    // 设置画布的大小为两张图片宽度之和，高度取最大值
+                    canvas.width = img1.width + img2.width;
+                    canvas.height = Math.max(img1.height, img2.height);
+
+                    // 清空画布
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // 绘制第一张图片
+                    ctx.drawImage(img1, 0, 0);
+
+                    // 绘制第二张图片
+                    ctx.drawImage(img2, img1.width, 0);
+
+                    console.log('图片合并完成！');
+                };
+
+                // 设置第二张图片的 src 属性，触发加载
+                img2.src = image2URL;
+            };
+
+            // 设置第一张图片的 src 属性，触发加载
+            img1.src = image1URL;
+        }
+
+
+        function page(show_main) {
+            var elements = document.querySelectorAll('.main-content');
+            elements.forEach(function (element) {
+                element.style.display = 'none';
+            });
+
+            var activeElements = document.querySelectorAll('.sidebar_a_active');
+            activeElements.forEach(function (element) {
+                element.classList.remove('sidebar_a_active');
+            });
+
+            var nav_id = document.getElementById(show_main + '_nav');
+
+            // 为当前点击的按钮添加 'sidebar_a_active' 类
+            nav_id.classList.add('sidebar_a_active');
+
+
+            var main_content = document.getElementById(show_main);
+            main_content.style.display = "block";
+
+
+            // 获取当前 URL
+            const url = new URL(window.location.href);
+
+            // 添加新的查询参数
+            url.searchParams.set('page', show_main);
+
+            // 更新浏览器的 URL
+            window.history.pushState({}, '', url);
+        }
+
+        var num_of_line = 0;
+
+        function line_control(control_status) {
+
+            // 获取 textarea 元素
+            var textarea = document.getElementById('myTextarea');
+
+            // 获取文本内容
+            var text = textarea.value;
+
+            // 将文本按行拆分成数组
+            var lines = text.split('\n');
+
+            // 计算行数
+            var lineCount = lines.length;
+
+            if (control_status == 'next') {
+                if (num_of_line + 2 >= lineCount) {
+                    alert('The line has reached the end');
+                    return;
+                } else {
+                    num_of_line += 2;
+                }
+            } else if (control_status == 'previous') {
+                if (num_of_line - 2 < 0) {
+                    alert('The line has reached the head');
+                    return;
+                } else {
+                    num_of_line -= 2;
+                }
+            } else if (control_status == 'start') {
+
+            }
+
+            // 获取特定行的内容（例如，第二行）
+            var Image1Code = lines[num_of_line];
+            var Image2Code = lines[num_of_line + 1];
+
+            var image1 = document.getElementById('image1');
+            image1.value = Image1Code;
+
+            var image2 = document.getElementById('image2');
+            image2.value = Image2Code;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const url = new URL(window.location.href);
+
+            // 获取查询参数
+            const page_num = url.searchParams.get('page');
+
+            if (page_num === null) {
+                // 添加新的查询参数
+                url.searchParams.set('page', 'main_1');
+
+                // 更新浏览器的 URL
+                window.history.pushState({}, '', url);
+            }
+
+            const main_num = url.searchParams.get('page');
+
+
+            // content的页面
+            var elements = document.querySelectorAll('.main-content');
+            elements.forEach(function (element) {
+                element.style.display = 'none';
+            });
+
+            var main_content = document.getElementById(main_num);
+            main_content.style.display = "block";
+
+
+            // nav的按钮激活
+            var activeElements = document.querySelectorAll('.sidebar_a_active');
+            activeElements.forEach(function (element) {
+                element.classList.remove('sidebar_a_active');
+            });
+
+            var nav_id = document.getElementById(main_num + '_nav');
+
+            // 为当前点击的按钮添加 'sidebar_a_active' 类
+            nav_id.classList.add('sidebar_a_active');
+
+        });
+
+    </script>
 </body>
+
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESP8266 控制台</title>
+    <title>Tool For Work</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -219,9 +219,9 @@
                         class="ssid_button">Start</button>
                     <button type="text" onclick="line_control('previous')" class="ssid_button">Previous</button>
                     <button type="text" onclick="line_control('next')" class="ssid_button">Next</button>
-                    <textarea id="myTextarea" rows="35%"
-                        style="resize: none; width:100%; margin-top: 5%; box-sizing: border-box;"
-                        placeholder="Put the code line by line"></textarea>
+                    <textarea id="myTextarea" rows="22%"
+                        style="font-size: 20px; resize: none; width:100%; margin-top: 5%; box-sizing: border-box;"
+                        placeholder="Put the barcode line by line"></textarea>
                 </div>
             </div>
 
@@ -253,7 +253,7 @@
 
 
     <div class="main-content" id="main_3">
-        <div class="wifi_container" style="border-radius: 10px; margin: auto; margin-top: 10%;">
+        <!-- <div class="wifi_container" style="border-radius: 10px; margin: auto; margin-top: 10%;">
             <h2>Sound Control</h2>
             <hr>
             <div class="submit_form">
@@ -263,11 +263,11 @@
                 <input type="text" id="duration" class="styled-input"><br>
                 <button onclick="sound()" class="styled-button">Confirm</button>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="main-content" id="main_4">
-        <div class="content_container">
+        <!-- <div class="content_container">
             <div style="width: 100%;">
                 <h1>File</h1>
                 <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
@@ -285,7 +285,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> -->
     </div>
 
 
@@ -304,9 +304,11 @@
                 return;
             }
 
-
-
             if (image2 == '' || image2 == 'undefined' || !image2) {
+                if (!image1) {
+                    alert('Image 1 is empty');
+                    return;
+                }
                 image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
 
                 // 创建1个图片对象
@@ -326,6 +328,29 @@
 
                 // 设置第1张图片的 src 属性，触发加载
                 img1.src = image1URL;
+                return;
+            }
+
+            if (image1 == '' || image1 == 'undefined' || !image1) {
+                image2URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image2 + "&code=Code128&translate-esc=on&rotation=270&font=Arial%2C25%2Cregular";
+
+                // 创建1个图片对象
+                const img2 = new Image();
+
+                img2.onload = function () {
+                    // 设置画布的大小为两张图片宽度之和，高度取最大值
+                    canvas.width = img2.width;
+                    canvas.height = img2.height;
+
+                    // 清空画布
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // 绘制第一张图片
+                    ctx.drawImage(img2, 0, 0);
+                };
+
+                // 设置第1张图片的 src 属性，触发加载
+                img2.src = image2URL;
                 return;
             }
 

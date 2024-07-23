@@ -291,6 +291,7 @@
 
     <script>
         function merge_image() {
+        
             const image1 = document.getElementById('image1').value;
             const image2 = document.getElementById('image2').value;
 
@@ -309,7 +310,11 @@
                     alert('Image 1 is empty');
                     return;
                 }
-                image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
+                
+                // image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
+                
+                // 新版本，包括数量（%0A%5Ct%5Ct）=（空行\t\t）|| （%5Cn%5Ct%5Ct）= （\n\t\t），两者生成的barcode是相同的
+                image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "%0A%5Ct%5Ct1&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
 
                 // 创建1个图片对象
                 const img1 = new Image();
@@ -332,7 +337,7 @@
             }
 
             if (image1 == '' || image1 == 'undefined' || !image1) {
-                image2URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image2 + "&code=Code128&translate-esc=on&rotation=270&font=Arial%2C25%2Cregular";
+                image2URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image2 + "%0A%5Ct%5Ct1&code=Code128&translate-esc=on&rotation=270&font=Arial%2C25%2Cregular";
 
                 // 创建1个图片对象
                 const img2 = new Image();
@@ -355,8 +360,8 @@
             }
 
 
-            image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
-            image2URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image2 + "&code=Code128&translate-esc=on&rotation=270&font=Arial%2C25%2Cregular";
+            image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "%0A%5Ct%5Ct1&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
+            image2URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image2 + "%0A%5Ct%5Ct1&code=Code128&translate-esc=on&rotation=270&font=Arial%2C25%2Cregular";
 
             // 创建两个图片对象
             const img1 = new Image();

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tool For Work</title>
+    <link rel="icon" type="image/x-icon" href="https://pbs.twimg.com/profile_images/1643772098463281152/htYfFpt0_400x400.jpg">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -286,12 +287,24 @@
 
             </div>
         </div> -->
+
+
+        <div
+            style='padding-top:8px; text-align:center; font-size:15px; font-family: Source Sans Pro, Arial, sans-serif;'>
+            <!-- back-linking to www.tec-it.com is required -->
+            <a href='https://www.tec-it.com' title='Barcode Software by TEC-IT' target='_blank'>
+                TEC-IT Barcode Generator<br />
+                <!-- logos are optional -->
+                <img alt='TEC-IT Barcode Software'
+                    src='http://www.tec-it.com/pics/banner/web/TEC-IT_Logo_75x75.gif'>
+            </a>
+        </div>
     </div>
 
 
     <script>
         function merge_image() {
-        
+
             const image1 = document.getElementById('image1').value;
             const image2 = document.getElementById('image2').value;
 
@@ -310,9 +323,9 @@
                     alert('Image 1 is empty');
                     return;
                 }
-                
+
                 // image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
-                
+
                 // 新版本，包括数量（%0A%5Ct%5Ct）=（空行\t\t）|| （%5Cn%5Ct%5Ct）= （\n\t\t），两者生成的barcode是相同的
                 image1URL = "https://barcode.tec-it.com/barcode.ashx?data=" + image1 + "%0A%5Ct%5Ct1&code=Code128&translate-esc=on&rotation=90&font=Arial%2C25%2Cregular";
 
@@ -372,7 +385,7 @@
                 // 加载第二张图片
                 img2.onload = function () {
                     // 设置画布的大小为两张图片宽度之和，高度取最大值
-                    canvas.width = img1.width + img2.width;
+                    canvas.width = img1.width + img2.width + 25;
                     canvas.height = Math.max(img1.height, img2.height);
 
                     // 清空画布
@@ -382,7 +395,7 @@
                     ctx.drawImage(img1, 0, 0);
 
                     // 绘制第二张图片
-                    ctx.drawImage(img2, img1.width, 0);
+                    ctx.drawImage(img2, img1.width+25, 0);
 
                     console.log('图片合并完成！');
                 };
@@ -511,7 +524,6 @@
             nav_id.classList.add('sidebar_a_active');
 
         });
-
     </script>
 </body>
 
